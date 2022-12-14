@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
 
     // REPLACE WITH ON ROUTE CHANGE
     this.isDataSegment$ = new Observable<boolean>(obj => {
-      let isData = window.location.href
+      const isData = window.location.href
         .split('/')[3]
         .toUpperCase() === 'DATA'
       obj.next(isData)

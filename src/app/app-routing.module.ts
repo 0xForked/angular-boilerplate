@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {NoAuthGuard} from '../shared/guards/no-auth.guard';
 import {AuthGuard} from '../shared/guards/auth.guard';
-import {ROUTES} from '../modules/auth/auth-routing.module';
 
 const routes: Routes = [
   {
@@ -16,7 +15,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: async () => (await import('../modules/auth/auth-routing.module')).ROUTES,
-        canLoad: [NoAuthGuard],
+        canActivate: [NoAuthGuard],
       },
       {
         path: '',
@@ -25,14 +24,6 @@ const routes: Routes = [
       },
     ]
   },
-
-  // {
-  //   path: 'data',
-  //   children: [
-  //     {},
-  //     {},
-  //   ]
-  // }
 ];
 
 @NgModule({

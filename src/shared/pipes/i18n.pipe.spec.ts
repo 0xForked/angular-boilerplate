@@ -26,7 +26,7 @@ describe('I18nPipe', () => {
 
   it('I18nPipe transform expected pass', () => {
     expect(translate).toBeTruthy();
-    i18service.use('en').then(() => {});
+    i18service.use('en');
     expect(translate.transform('test')).toBe('test');
   });
 });

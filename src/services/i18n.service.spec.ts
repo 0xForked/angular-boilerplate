@@ -40,7 +40,7 @@ describe('I18nService', () => {
     service.use(defaultLang).then(() => {
       expect(service.data).toBeDefined();
       expect(service.data).toBeInstanceOf(Object);
-      expect(service.data.hello).toEqual('Hello World');
+      expect(service.data.hello).toEqual('hello world');
     });
 
     const i18nFilePath = `assets/i18n/${defaultLang}.json`;
