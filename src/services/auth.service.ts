@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { storage } from '../shared/utils/storage.utils';
+import { storage } from '../shared/utils/storage.util';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

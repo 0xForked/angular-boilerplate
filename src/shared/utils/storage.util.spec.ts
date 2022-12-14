@@ -1,4 +1,4 @@
-import { storage } from './storage.utils';
+import { storage } from './storage.util';
 
 describe('StorageUtils', () => {
   it('should store & retrieve item from local & session storage', () => {

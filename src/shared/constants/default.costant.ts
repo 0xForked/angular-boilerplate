@@ -1,6 +1,4 @@
-export type AppTheme = 'system' | 'light' | 'dark';
-
-export type AppLang = 'en' | 'id';
+import {AppLang, AppTheme} from '../types/app.type';
 
 export const DEFAULT_LANGUAGE: AppLang = 'en' as const;
 

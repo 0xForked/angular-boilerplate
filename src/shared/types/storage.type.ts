@@ -1,4 +1,4 @@
-import {AppTheme} from '../constants/default.costant';
+import {AppLang, AppTheme} from './app.type';
 
 type StorageObjectMap = {
   'App/session': {
@@ -6,9 +6,10 @@ type StorageObjectMap = {
     token: string;
   };
   'App/theme': AppTheme;
+  'App/language': AppLang;
 };
 
-export type StorageObjectType = 'App/session' | 'App/theme';
+export type StorageObjectType = 'App/session' | 'App/theme' | 'App/language';
 
 export type StorageObjectData<T extends StorageObjectType> = {
   type: T;

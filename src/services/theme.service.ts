@@ -1,22 +1,20 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { storage } from '../shared/utils/storage.utils';
+import { storage } from '../shared/utils/storage.util';
 import { BehaviorSubject, fromEventPattern, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {AppTheme, DEFAULT_BASE_THEME} from '../shared/constants/default.costant';
+import { DEFAULT_BASE_THEME } from '../shared/constants/default.costant';
+import { AppTheme } from '../shared/types/app.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService implements OnDestroy {
-  //#region attributes
   currentTheme$ = new BehaviorSubject<AppTheme | null>(this._storedTheme);
 
   private _destroy$ = new Subject();
   private readonly _mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  //#endregion
 
-  //#region accessors
   public get currentTheme(): AppTheme | null {
     return this.currentTheme$.getValue();
   }
@@ -32,7 +30,6 @@ export class ThemeService implements OnDestroy {
   private set _storedTheme(theme: AppTheme | null) {
     storage.setItem('App/theme', theme as AppTheme);
   }
-  //#endregion
 
   constructor(@Inject(DOCUMENT) private _document: Document) {}
 
@@ -72,10 +69,7 @@ export class ThemeService implements OnDestroy {
     fromEventPattern<MediaQueryListEvent>(
       (handler: EventListener) => this._mediaQuery.addEventListener('change', handler),
       (handler: EventListener) => this._mediaQuery.removeEventListener('change', handler),
-    )
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(() => {
-        // Only applies changes when the current theme is "system"
+    ).pipe(takeUntil(this._destroy$)).subscribe(() => {
         if (this._storedTheme === 'system') {
           this.setTheme('system');
         }
