@@ -1,0 +1,1 @@
+# SHARED FUNC, COMPONENT, etc.
