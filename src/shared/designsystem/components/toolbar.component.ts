@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -37,7 +38,7 @@ import {Router} from '@angular/router';
       <div class="flex flex-col items-center justify-center flex-1 space-y-4">
         <!--Data Button-->
         <button
-          (click)="navigateToRoute('lorem')"
+          (click)="navigateToRoute('data')"
           class="p-2 transition-colors duration-200 rounded-full text-primary-lighter {{ (active('DATA')) ?'bg-gray-300 dark:bg-gray-600 ring-gray-900' : 'bg-gray-50 dark:bg-gray-800' }} hover:text-black hover:bg-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-300 dark:focus:bg-gray-600 focus:ring-gray-900"
         >
           <span class="sr-only">Open Data panel</span>
@@ -76,6 +77,7 @@ import {Router} from '@angular/router';
 
         <!-- Settings button -->
         <button
+          (click)="navigateToRoute('lorem')"
           class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-gray-50 dark:bg-gray-800 hover:text-black hover:bg-gray-200 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-300 dark:focus:bg-gray-600 focus:ring-gray-900"
         >
           <span class="sr-only">Open settings panel</span>
@@ -132,7 +134,7 @@ import {Router} from '@angular/router';
               Your Profile
             </a>
             <a
-              href="#"
+              (click)="loggedOut()"
               role="menuitem"
               class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
             >
@@ -146,7 +148,7 @@ import {Router} from '@angular/router';
 })
 export class ToolbarComponent {
 
-  constructor(private route: Router) {}
+  constructor(private route: Router, private authService: AuthService) {}
 
   active(path: string): boolean {
     return window.location.href
@@ -158,4 +160,13 @@ export class ToolbarComponent {
   toggleUserMenu = () => this.displayUserMenu = !this.displayUserMenu;
 
   navigateToRoute = (path: string) => this.route.navigateByUrl(`/${path}`)
+
+  loggedOut() {
+    this.authService.logout()
+    this.authService.isLoggedIn$.subscribe(async (loggedIn) => {
+      if (!loggedIn) {
+        await this.route.navigateByUrl("/login?callbackURL=home", {})
+      }
+    })
+  }
 }
